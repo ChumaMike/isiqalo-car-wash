@@ -52,46 +52,35 @@
     </ul>
   </div>
 
-  <!-- VIDEO HERO WRAPPER (300vh tall — controls scroll duration) -->
-  <div class="video-hero-wrapper" id="video-hero-wrapper">
-    <div class="video-hero-sticky">
-      <video
-        class="video-bg"
-        id="hero-video"
-        src="Car_Wash_Video_Generation.mp4"
-        poster="image.png"
-        muted
-        playsinline
-        preload="auto"
-      ></video>
-      <div class="video-overlay"></div>
-      <div class="video-merge-gradient"></div>
-
-      <!-- Hero content overlays — each fades in at scroll milestones -->
+  <!-- HERO -->
+  <section class="hero-section" id="hero">
+    <div class="hero-bg">
+      <img src="image.png" alt="" aria-hidden="true" class="hero-bg-img" />
+      <div class="hero-bg-overlay"></div>
+    </div>
+    <div class="container">
       <div class="hero-content">
-        <div class="hero-badge" data-milestone="0.05">DUBE · SOWETO · EST. 2024</div>
-        <h1 class="hero-title" data-milestone="0.15">
+        <div class="hero-badge">DUBE · SOWETO · EST. 2024</div>
+        <h1 class="hero-title">
           ISIQALO<br /><span class="hero-title-accent">CAR WASH</span>
         </h1>
-        <p class="hero-sub" data-milestone="0.30">Soweto's premier car care destination</p>
-        <div class="hero-ctas" data-milestone="0.50">
+        <p class="hero-sub">Soweto's premier car care destination</p>
+        <div class="hero-ctas">
           <a href="#booking" class="btn btn-primary">Book a Wash</a>
           <a href="#services" class="btn btn-outline-blue">Our Services ↓</a>
         </div>
-        <div class="hero-cards" data-milestone="0.65">
+        <div class="hero-cards">
           <div class="hero-card"><span class="hero-card-value">5.0★</span><span class="hero-card-label">Google Rating</span></div>
           <div class="hero-card"><span class="hero-card-value">R30</span><span class="hero-card-label">From</span></div>
           <div class="hero-card"><span class="hero-card-value">07:30</span><span class="hero-card-label">Opens Daily</span></div>
         </div>
       </div>
-
-      <!-- Scroll indicator -->
-      <div class="scroll-indicator">
-        <span class="scroll-label">SCROLL</span>
-        <div class="scroll-bar"><div class="scroll-progress-bar" id="scroll-progress-bar"></div></div>
-      </div>
     </div>
-  </div>
+    <div class="scroll-indicator">
+      <span class="scroll-label">SCROLL</span>
+      <div class="scroll-bar"><div class="scroll-bar-inner"></div></div>
+    </div>
+  </section>
 
   <!-- STATS BAR -->
   <section class="stats-bar" id="stats">
@@ -429,6 +418,36 @@
     </div>
   </section>
 
+  <!-- VIDEO REEL -->
+  <section class="video-reel-section" id="video-reel">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="eyebrow">See Us in Action</div>
+        <h2 class="section-title">Watch the Experience</h2>
+        <p class="section-sub">Professional car care, every time</p>
+      </div>
+      <div class="video-reel-stage reveal">
+        <div class="video-reel-frame">
+          <div class="video-reel-screen">
+            <video
+              src="Car_Wash_Video_Generation.mp4"
+              poster="image.png"
+              muted
+              autoplay
+              loop
+              playsinline
+              preload="auto"
+            ></video>
+          </div>
+          <div class="video-reel-bezel">
+            <div class="video-reel-dot"></div>
+            <span class="video-reel-label">ISIQALO CAR WASH</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
@@ -470,9 +489,6 @@
   </a>
   <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
 
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

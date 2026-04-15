@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   initPromoBanner();
   initNav();
-  initScrollVideo();
+  initScrollProgress();
   initStats();
   initServiceTabs();
   initGallery();
@@ -62,102 +62,17 @@ function initNav() {
 }
 
 /* ============================================================
-   SMOOTH SCROLL + GSAP VIDEO HERO
+   HERO SCROLL PROGRESS BAR
    ============================================================ */
-function initScrollVideo() {
-  const wrapper = document.getElementById('video-hero-wrapper');
-  const video = document.getElementById('hero-video');
-  const progressBar = document.getElementById('scroll-progress-bar');
+function initScrollProgress() {
+  const bar = document.querySelector('.scroll-bar-inner');
+  if (!bar) return;
 
-  if (!wrapper || !video) return;
-
-  // ── Lenis smooth scroll ──────────────────────────────────
-  const lenis = new Lenis({
-    lerp: 0.08,
-    smoothWheel: true,
-    syncTouch: false,
-  });
-
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
-
-  // ── Register ScrollTrigger ───────────────────────────────
-  gsap.registerPlugin(ScrollTrigger);
-
-  // ── Video scrub ──────────────────────────────────────────
-  // scrub: 1.5 means GSAP interpolates progress over 1.5s — silky smooth
-  let videoProgress = { value: 0 };
-
-  ScrollTrigger.create({
-    trigger: wrapper,
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: 1.5,
-    onUpdate: (self) => {
-      const p = self.progress;
-
-      // Scrub video
-      if (video.readyState >= 2 && video.duration) {
-        video.currentTime = p * video.duration;
-      }
-
-      // Progress bar
-      if (progressBar) {
-        progressBar.style.height = `${p * 100}%`;
-      }
-    },
-  });
-
-  // ── Hero overlay — GSAP timeline scrubbed to scroll ──────
-  // Each element fades in at its milestone scroll progress (0–1)
-  const badge   = document.querySelector('.hero-badge');
-  const title   = document.querySelector('.hero-title');
-  const sub     = document.querySelector('.hero-sub');
-  const ctas    = document.querySelector('.hero-ctas');
-  const cards   = document.querySelector('.hero-cards');
-
-  // Set initial state (already set by CSS, but be explicit)
-  gsap.set([badge, title, sub, ctas, cards], { opacity: 0, y: 24 });
-
-  const overlayTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: wrapper,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.8,
-    },
-  });
-
-  // position values (0–1) map to scroll progress
-  overlayTl
-    .to(badge,  { opacity: 1, y: 0, ease: 'power2.out', duration: 0.12 }, 0.04)
-    .to(title,  { opacity: 1, y: 0, ease: 'power2.out', duration: 0.18 }, 0.14)
-    .to(sub,    { opacity: 1, y: 0, ease: 'power2.out', duration: 0.12 }, 0.28)
-    .to(ctas,   { opacity: 1, y: 0, ease: 'power2.out', duration: 0.12 }, 0.46)
-    .to(cards,  { opacity: 1, y: 0, ease: 'power2.out', duration: 0.12 }, 0.62)
-    // Fade everything out as we reach the end of the hero (elegant exit)
-    .to([badge, title, sub, ctas, cards], {
-      opacity: 0,
-      y: -16,
-      ease: 'power2.in',
-      duration: 0.08,
-      stagger: 0.015,
-    }, 0.88);
-
-  // ── Video overlay darkens as you scroll deeper ───────────
-  const overlay = document.querySelector('.video-overlay');
-  if (overlay) {
-    gsap.to(overlay, {
-      scrollTrigger: {
-        trigger: wrapper,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 1,
-      },
-      opacity: 1.4, // CSS gradient intensifies (opacity > 1 clamps to 1)
-    });
-  }
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.height = total > 0 ? `${(scrolled / total) * 100}%` : '0%';
+  }, { passive: true });
 }
 
 /* ============================================================
