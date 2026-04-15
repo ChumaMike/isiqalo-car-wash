@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initStats();
   initServiceTabs();
   initGallery();
-  initBeforeAfter();
   initCarousel();
   initForm();
   initFloatingButtons();
@@ -216,42 +215,6 @@ function initGallery() {
     if (e.key === 'ArrowRight') showNext();
     if (e.key === 'ArrowLeft') showPrev();
   });
-}
-
-/* ============================================================
-   BEFORE / AFTER SLIDER
-   ============================================================ */
-function initBeforeAfter() {
-  const slider = document.getElementById('ba-slider');
-  const handle = document.getElementById('ba-handle');
-  const afterEl = slider ? slider.querySelector('.ba-after') : null;
-
-  if (!slider || !handle || !afterEl) return;
-
-  let isDragging = false;
-
-  function setPosition(clientX) {
-    const rect = slider.getBoundingClientRect();
-    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
-    const pct = (x / rect.width) * 100;
-    afterEl.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
-    handle.style.left = `${pct}%`;
-  }
-
-  handle.addEventListener('mousedown', (e) => { isDragging = true; e.preventDefault(); });
-  window.addEventListener('mouseup', () => { isDragging = false; });
-  window.addEventListener('mousemove', (e) => {
-    if (isDragging) setPosition(e.clientX);
-  });
-
-  handle.addEventListener('touchstart', (e) => { isDragging = true; e.preventDefault(); }, { passive: false });
-  window.addEventListener('touchend', () => { isDragging = false; });
-  window.addEventListener('touchmove', (e) => {
-    if (isDragging) {
-      e.preventDefault();
-      setPosition(e.touches[0].clientX);
-    }
-  }, { passive: false });
 }
 
 /* ============================================================
